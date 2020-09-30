@@ -1,8 +1,11 @@
 # full_spectrum_IASI-NG_denoising
 Source code of the article
+
     M. Colom, J.M. Morel (2019). Full-Spectrum Denoising of High-SNR Hyperspectral Images.
     Journal of the Optical Society of America A. 36, 450-463.
+
 doi:10.1364/JOSAA.36.000450
+
 This article is available at http://mcolom.info
 
 Please cite the article is you use this code. Bibtex:
