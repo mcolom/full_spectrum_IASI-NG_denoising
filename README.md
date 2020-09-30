@@ -9,6 +9,7 @@ doi:10.1364/JOSAA.36.000450
 This article is available at http://mcolom.info
 
 Please cite the article is you use this code. Bibtex:
+
     @article{Colom:19,
     author = {Miguel Colom and Jean-Michel Morel},
     journal = {J. Opt. Soc. Am. A},
