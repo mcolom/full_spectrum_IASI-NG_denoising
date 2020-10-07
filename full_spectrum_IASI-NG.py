@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 """
@@ -42,7 +42,6 @@ http://mcolom.info
 from netCDF4 import Dataset
 import argparse
 import numpy as np
-from functions import *
 import numpy.linalg as linalg
 from scipy import interpolate
 from scipy.cluster.vq import kmeans, vq, whiten
@@ -377,8 +376,8 @@ print "granule #{}, Q={}, N={}, K={}".format(granule_num, Q, N, K)
 
 # Obtain the SDV: (120, 23, 8461)
 # IASI-NG: (40, 56, 16920)
-filename = f"gi_precomp/decoded_granule{granule_num}.npy"
-filename_nc = f'granule{granule_num}.nc'
+filename = "gi_precomp/decoded_granule{}.npy".format(granule_num)
+filename_nc = 'granule{}.nc'.format(granule_num)
 if not os.path.isfile(filename):
     dataset = Dataset(filename_nc, 'r')
     print_metadata(dataset)
