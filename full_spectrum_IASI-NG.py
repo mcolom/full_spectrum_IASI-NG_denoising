@@ -316,7 +316,8 @@ def plot_autocorrelation_histo(RF, title, filename):
 
 def get_SDV(dataset, granule_noisy, freqs, map_1d_to_2d):
     """
-    Read the hyperspectral bands of the input image
+    Read the hyperspectral bands of the input image.
+    It needs to be spatially decoded due to the fancy IASI-NG format
     """
     num_bands = 0
     while 'spectrum_band%d' % (num_bands+1) in dataset.variables.keys():
@@ -373,14 +374,26 @@ K = int(args.K)
 
 print "granule #{}, Q={}, N={}, K={}".format(granule_num, Q, N, K)
 
+
 # Obtain the SDV: (120, 23, 8461)
 # IASI-NG: (40, 56, 16920)
-# It needs to be spatially decoded
-filename = "../gi_precomp/decoded_granule{}.npy".format(granule_num)
-filename_nc = '../granule{}.nc'.format(granule_num)
-dataset = Dataset(filename_nc, 'r')
-_, freqs = read_granule_all_bands(dataset)
-SDV = np.load(filename)
+filename = f"gi_precomp/decoded_granule{granule_num}.npy"
+filename_nc = f'granule{granule_num}.nc'
+if not os.path.isfile(filename):
+    dataset = Dataset(filename_nc, 'r')
+    print_metadata(dataset)
+
+    granule, freqs = read_granule_all_bands(dataset)
+    
+    # Decode the HSI spatially
+    map_1d_to_2d = np.load("map_1d_to_2d.npy")[0]
+    SDV = get_SDV(dataset, granule, freqs, map_1d_to_2d)
+
+    np.save(filename, SDV)
+else:
+    dataset = Dataset(filename_nc, 'r')
+    _, freqs = read_granule_all_bands(dataset)
+    SDV = np.load(filename)
 
 assert(SDV.shape == (56, 40, 16920))
 
